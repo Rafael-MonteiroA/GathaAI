@@ -1,6 +1,8 @@
 <div align="center">
 
 <img src="assets/logo.png" alt="GathaAI" width="800">
+
+---
 <p>
   <img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white">
   <img src="https://img.shields.io/badge/SQLite-Memória-003B57?style=for-the-badge&logo=sqlite&logoColor=white">
