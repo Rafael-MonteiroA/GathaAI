@@ -2,9 +2,6 @@
 
 <img src="assets/logo.png" alt="GathaAI" width="800">
 
-
-# 🤖 GathaAI
-
 ### Assistente de IA para Terminal com Memória, Busca na Web e Suporte a Múltiplos Modelos
 
 <p>
