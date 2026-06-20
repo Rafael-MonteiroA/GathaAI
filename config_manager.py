@@ -36,6 +36,7 @@ PADRAO = {
     "api_key": None,
     "modelo_api": None,
     "base_url": None,       # usado apenas pelo provedor "custom" (compatível com OpenAI)
+    "atalhos_pc": {},       # atalhos personalizados para programas {"nome": "caminho"}
 }
 
 

@@ -32,6 +32,14 @@ Comandos disponiveis:
                                   carrega como contexto
   /limpar_arquivo                remove o arquivo/projeto atualmente carregado
 
+  Controle do computador
+  -----------------------
+  A IA executa acoes automaticamente quando voce pedir!
+  Exemplos: "abra o Chrome", "abra o Valorant", "abra a pasta Downloads"
+  /atalho <nome> <caminho>       registra um atalho para um programa
+  /atalho remover <nome>         remove um atalho personalizado
+  /atalhos                       lista todos os atalhos personalizados
+
   IA externa via API
   --------------------
   /logapi <provedor> <chave> [modelo]
@@ -236,4 +244,46 @@ def executar_comando(comando):
         estado.limpar_arquivo()
         return "Arquivo/projeto removido do contexto."
 
+    if base == "/atalho":
+        return _comando_atalho(partes)
+
+    if base == "/atalhos":
+        return estado.listar_atalhos()
+
     return f"Comando '{base}' nao reconhecido. Digite /ajuda para ver a lista de comandos."
+
+
+def _comando_atalho(partes):
+    """Gerencia atalhos personalizados para programas."""
+    if len(partes) < 2:
+        return (
+            "Uso: /atalho <nome> <caminho_do_executavel>\n"
+            "      /atalho remover <nome>\n"
+            "Exemplo: /atalho valorant \"C:\\Riot Games\\VALORANT.exe\""
+        )
+
+    sub = partes[1].lower()
+
+    if sub == "remover":
+        if len(partes) < 3:
+            return "Uso: /atalho remover <nome>"
+        nome = partes[2]
+        if estado.remover_atalho(nome):
+            return f"Atalho '{nome}' removido."
+        return f"Atalho '{nome}' nao encontrado."
+
+    nome = partes[1]
+    if len(partes) < 3:
+        return "Faltou o caminho do executavel. Uso: /atalho <nome> <caminho>"
+
+    caminho = " ".join(partes[2:]).strip().strip('"')
+
+    if not os.path.exists(caminho):
+        return (
+            f"Aviso: o caminho '{caminho}' nao existe no momento.\n"
+            f"O atalho '{nome}' foi registrado mesmo assim.\n"
+            f"Verifique se o caminho esta correto."
+        )
+
+    estado.definir_atalho(nome, caminho)
+    return f"Atalho registrado: {nome} → {caminho}"

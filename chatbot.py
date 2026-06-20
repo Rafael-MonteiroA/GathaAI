@@ -5,6 +5,12 @@ from internet import pesquisar
 
 from comandos.comandos import executar_comando
 
+from parser_acoes import (
+    extrair_acao,
+    executar_acao_extraida,
+    limpar_acao_da_resposta,
+)
+
 from memoria_vetorial import (
     salvar_memoria,
     buscar_memoria
@@ -111,6 +117,13 @@ revisão, debug ou planejamento do projeto quando for relevante):
 {estado.arquivo_carregado['conteudo']}
 """
 
+    # Montar bloco de atalhos personalizados
+    atalhos = estado.obter_atalhos()
+    bloco_atalhos = ""
+    if atalhos:
+        lista = ", ".join(f"{n} → {c}" for n, c in atalhos.items())
+        bloco_atalhos = f"\nAtalhos personalizados do usuário: {lista}\n"
+
     return f"""
 Você é GathaAI.
 
@@ -127,6 +140,45 @@ Regras:
   código ou ajude a continuar o desenvolvimento, conforme o que for pedido.
 - Se não souber algo, admita.
 
+Controle do computador:
+
+Você pode executar ações no computador do usuário. Quando o usuário pedir
+para abrir programas, sites, pastas, executar comandos, etc., inclua na sua
+resposta um bloco de ação no formato abaixo. Você DEVE responder normalmente
+E incluir o bloco de ação. Exemplo: "Claro, vou abrir o Chrome para você!"
+seguido do bloco de ação.
+
+Formato: [AÇÃO]: {{"tipo": "...", ...}}
+
+Ações disponíveis:
+- abrir_programa: {{"tipo": "abrir_programa", "alvo": "nome do programa"}}
+  Ex: abrir chrome, discord, valorant, calculadora, notepad, vscode, spotify
+- abrir_url: {{"tipo": "abrir_url", "url": "https://..."}}
+  Ex: abrir uma URL específica
+- abrir_site: {{"tipo": "abrir_site", "nome": "nome do site"}}
+  Ex: abrir google, youtube, github, gmail, netflix, twitch
+- pesquisar_google: {{"tipo": "pesquisar_google", "termo": "o que pesquisar"}}
+  Ex: pesquisar algo no Google
+- abrir_pasta: {{"tipo": "abrir_pasta", "caminho": "caminho ou nome da pasta"}}
+  Ex: abrir downloads, documentos, desktop, ou caminho completo
+- abrir_arquivo: {{"tipo": "abrir_arquivo", "caminho": "caminho do arquivo"}}
+  Ex: abrir um arquivo específico
+- executar_comando: {{"tipo": "executar_comando", "comando": "comando shell"}}
+  Ex: executar comandos no terminal (requer confirmação do usuário)
+- controle_sistema: {{"tipo": "controle_sistema", "acao": "desligar|reiniciar|hibernar|bloquear|suspender"}}
+  Ex: desligar/reiniciar o PC (requer confirmação do usuário)
+- fechar_programa: {{"tipo": "fechar_programa", "alvo": "nome do programa"}}
+  Ex: fechar chrome, discord, etc. (requer confirmação)
+
+Regras para ações:
+- Use APENAS quando o usuário PEDIR para executar algo no computador.
+- NÃO use ações em perguntas normais de conversa.
+- Inclua APENAS UM bloco [AÇÃO] por resposta (a menos que o usuário peça
+  múltiplas coisas).
+- Sempre responda com texto amigável ALÉM do bloco de ação.
+- Para "abra o Google", use abrir_site com nome "google" (não abrir_programa).
+- Para "pesquise X no Google", use pesquisar_google.
+{bloco_atalhos}
 Memória recente:
 
 {contexto}
@@ -258,12 +310,21 @@ def loop_principal():
             print(f"{_COR_ERRO}Erro: {erro}{_RESET}")
             continue
 
-        print(f"\n{_COR_IA}GathaAI:{_RESET}", texto)
+        # Verificar se a IA quer executar uma ação no computador
+        acao = extrair_acao(texto)
+        texto_limpo = limpar_acao_da_resposta(texto) if acao else texto
 
-        salvar(pergunta, texto)
+        print(f"\n{_COR_IA}GathaAI:{_RESET}", texto_limpo)
+
+        if acao:
+            resultado_acao = executar_acao_extraida(acao)
+            if resultado_acao:
+                print(f"\n{_COR_AVISO}>> {resultado_acao}{_RESET}")
+
+        salvar(pergunta, texto_limpo)
 
         try:
-            salvar_memoria(f"\nUsuário:\n{pergunta}\n\nIA:\n{texto}\n")
+            salvar_memoria(f"\nUsuário:\n{pergunta}\n\nIA:\n{texto_limpo}\n")
         except Exception as erro:
             print(f"{_COR_AVISO}(não foi possível salvar na memória vetorial: {erro}){_RESET}")
 
