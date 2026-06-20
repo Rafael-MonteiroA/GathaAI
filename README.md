@@ -1,9 +1,6 @@
 <div align="center">
 
 <img src="assets/logo.png" alt="GathaAI" width="800">
-
-### Assistente de IA para Terminal com Memória, Busca na Web e Suporte a Múltiplos Modelos
-
 <p>
   <img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white">
   <img src="https://img.shields.io/badge/SQLite-Memória-003B57?style=for-the-badge&logo=sqlite&logoColor=white">
@@ -14,15 +11,6 @@
 <img src="https://img.shields.io/github/stars/Rafael-MonteiroA/GathaAI?style=flat-square">
 <img src="https://img.shields.io/github/forks/Rafael-MonteiroA/GathaAI?style=flat-square">
 <img src="https://img.shields.io/github/license/Rafael-MonteiroA/GathaAI?style=flat-square">
-
----
-
-### 🧠 Memória Persistente
-### 🌐 Busca na Web
-### 📂 Análise de Projetos
-### 🤖 IA Local ou APIs Externas
-
-</div>
 
 ---
 
