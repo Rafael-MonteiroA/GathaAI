@@ -1,0 +1,25 @@
+# Ambiente virtual
+.venv/
+venv/
+
+# Configuração com chave de API -- NUNCA versionar isso
+config/api_config.json
+
+# Dados pessoais de memória (conversas, fatos aprendidos)
+dados/*.db
+dados/*.json
+!dados/.gitkeep
+
+# Memória vetorial
+vetores/*.index
+vetores/*.pkl
+!vetores/.gitkeep
+
+# Caches do Python
+__pycache__/
+*.pyc
+
+# SOs / editores
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,8 @@
+ollama
+requests
+pypdf
+sentence-transformers
+faiss-cpu
+numpy
+ddgs
+colorama
