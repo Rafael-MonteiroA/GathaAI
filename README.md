@@ -1,4 +1,4 @@
-<div align="center">
+<div align="left">
 
 <img src="assets/logo.png" alt="GathaAI" width="800">
 
@@ -153,31 +153,6 @@ python chatbot.py
 
 ---
 
-# 📂 Estrutura
-
-```text
-GathaAI/
-│
-├── chatbot.py
-├── config_manager.py
-├── estado.py
-├── ia_api.py
-├── leitor_arquivos.py
-├── memoria.py
-├── memoria_vetorial.py
-├── fatos.py
-├── internet.py
-│
-├── comandos/
-│   └── comandos.py
-│
-├── config/
-├── dados/
-└── vetores/
-```
-
----
-
 # 🔒 Segurança
 
 ✅ Chaves de API armazenadas localmente
@@ -202,29 +177,7 @@ GathaAI/
 - colorama
 
 ---
-
-# 🗺️ Roadmap
-
-## v1.0
-- ✅ Memória SQLite
-- ✅ Busca na Web
-- ✅ IA Local
-- ✅ APIs Externas
-
-## v2.0
-- 🔄 Memória Vetorial Avançada
-- 🔄 Aprendizado Automático
-
-## v3.0
-- 🔄 Melhor análise de projetos
-- 🔄 Suporte expandido a documentos
-
-## v4.0
-- 🔄 Interface gráfica
-
----
-
-<div align="center">
+<div align="left">
 
 ## Created by Rafael Monteiro
 
