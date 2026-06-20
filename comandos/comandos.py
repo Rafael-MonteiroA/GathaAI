@@ -26,16 +26,19 @@ Comandos disponiveis:
 
   Arquivos e projetos
   --------------------
-  /arquivo <caminho>             carrega um arquivo (.txt .pdf .zip .py .c .cpp .java ...)
-                                  como contexto para a proxima pergunta
-  /analisar <caminho_da_pasta>   le um projeto inteiro (pasta ou .zip) e o
-                                  carrega como contexto
-  /limpar_arquivo                remove o arquivo/projeto atualmente carregado
+  /arquivo <caminho>            carrega um arquivo (.txt .pdf .zip .py .c .cpp .java ...)
+                                como contexto para a proxima pergunta
+
+  /analisar <caminho_da_pasta>  le um projeto inteiro (pasta ou .zip) e o
+                                carrega como contexto
+
+  /limpar_arquivo               remove o arquivo/projeto atualmente carregado
 
   Controle do computador
   -----------------------
   A IA executa acoes automaticamente quando voce pedir!
   Exemplos: "abra o Chrome", "abra o Valorant", "abra a pasta Downloads"
+  
   /atalho <nome> <caminho>       registra um atalho para um programa
   /atalho remover <nome>         remove um atalho personalizado
   /atalhos                       lista todos os atalhos personalizados
@@ -45,11 +48,13 @@ Comandos disponiveis:
   /logapi <provedor> <chave> [modelo]
                                   configura uma IA externa para auxiliar
                                   (provedores: anthropic, openai, groq, custom)
+
   /logapi custom <chave> <modelo> <url_base>
-                                  configuracao para um endpoint customizado
-                                  compativel com o formato da OpenAI
-  /logapi status                 mostra o provedor/modelo configurados
-  /logapi remover                remove a chave de API salva
+                                configuracao para um endpoint customizado
+                                compativel com o formato da OpenAI
+
+  /logapi status                mostra o provedor/modelo configurados
+  /logapi remover               remove a chave de API salva
 
   Modo de resposta
   ------------------
