@@ -9,8 +9,7 @@ quando o usuário pede para executar algo no computador.
 import json
 import re
 
-import acoes_pc
-
+import system_agent
 
 # Regex para encontrar blocos de ação na resposta da IA
 # Aceita [AÇÃO], [ACAO], [ACTION] (case-insensitive)
@@ -58,77 +57,16 @@ def limpar_acao_da_resposta(resposta_ia):
 
 def executar_acao_extraida(acao):
     """
-    Recebe o dict da ação e chama a função correspondente em acoes_pc.
+    Recebe o dict da ação e chama a função correspondente no system_agent.
     Retorna string de feedback.
     """
     if isinstance(acao, list):
         # Múltiplas ações
         resultados = []
         for a in acao:
-            resultado = _executar_uma_acao(a)
+            resultado = system_agent.agent.processar_acao_ia(a)
             if resultado:
                 resultados.append(resultado)
         return "\n".join(resultados)
 
-    return _executar_uma_acao(acao)
-
-
-def _executar_uma_acao(acao):
-    """Executa uma única ação e retorna feedback."""
-    tipo = acao.get("tipo", "").lower().strip()
-
-    if tipo == "abrir_programa":
-        alvo = acao.get("alvo", "")
-        if not alvo:
-            return "[ERRO] Ação 'abrir_programa' sem alvo especificado."
-        return acoes_pc.abrir_programa(alvo)
-
-    if tipo == "abrir_url":
-        url = acao.get("url", "")
-        if not url:
-            return "[ERRO] Ação 'abrir_url' sem URL especificada."
-        return acoes_pc.abrir_url(url)
-
-    if tipo == "abrir_site":
-        nome = acao.get("nome", acao.get("alvo", ""))
-        if not nome:
-            return "[ERRO] Ação 'abrir_site' sem nome especificado."
-        return acoes_pc.abrir_site_conhecido(nome)
-
-    if tipo == "pesquisar_google":
-        termo = acao.get("termo", acao.get("query", ""))
-        if not termo:
-            return "[ERRO] Ação 'pesquisar_google' sem termo especificado."
-        return acoes_pc.pesquisar_google(termo)
-
-    if tipo == "abrir_pasta":
-        caminho = acao.get("caminho", acao.get("alvo", ""))
-        if not caminho:
-            return "[ERRO] Ação 'abrir_pasta' sem caminho especificado."
-        return acoes_pc.abrir_pasta(caminho)
-
-    if tipo == "abrir_arquivo":
-        caminho = acao.get("caminho", acao.get("alvo", ""))
-        if not caminho:
-            return "[ERRO] Ação 'abrir_arquivo' sem caminho especificado."
-        return acoes_pc.abrir_arquivo(caminho)
-
-    if tipo == "executar_comando":
-        comando = acao.get("comando", acao.get("cmd", ""))
-        if not comando:
-            return "[ERRO] Ação 'executar_comando' sem comando especificado."
-        return acoes_pc.executar_comando_shell(comando)
-
-    if tipo == "controle_sistema":
-        acao_sistema = acao.get("acao", acao.get("alvo", ""))
-        if not acao_sistema:
-            return "[ERRO] Ação 'controle_sistema' sem ação especificada."
-        return acoes_pc.controle_sistema(acao_sistema)
-
-    if tipo == "fechar_programa":
-        alvo = acao.get("alvo", "")
-        if not alvo:
-            return "[ERRO] Ação 'fechar_programa' sem alvo especificado."
-        return acoes_pc.fechar_programa(alvo)
-
-    return f"[ERRO] Tipo de ação desconhecido: '{tipo}'"
+    return system_agent.agent.processar_acao_ia(acao)
